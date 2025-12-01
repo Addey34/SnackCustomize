@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import CenteredLayout from './layouts/CenteredLayout';
 import MainLayout from './layouts/MainLayout';
+import { AdminPage } from './pages/Admin';
 import { Error } from './pages/Error';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
@@ -48,6 +49,16 @@ export default function App() {
           <ProtectedRoute>
             <CenteredLayout>
               <Profile />
+            </CenteredLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute requiredRole="admin">
+            <CenteredLayout>
+              <AdminPage />
             </CenteredLayout>
           </ProtectedRoute>
         }
