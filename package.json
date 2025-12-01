@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "dev": "concurrently \"pnpm --filter snack-backend dev\" \"pnpm --filter snack-frontend dev\"",
+    "build": "pnpm --filter snack-frontend build",
+    "lint": "pnpm --filter snack-frontend lint",
+    "client": "pnpm --filter snack-frontend dev",
+    "server": "pnpm --filter snack-backend dev"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "prettier": "^3.7.2"
+  }
+}
