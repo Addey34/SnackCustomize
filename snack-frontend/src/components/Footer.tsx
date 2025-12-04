@@ -1,7 +1,10 @@
+import { useSettings } from '../hooks/useSettings';
+
 export default function Footer() {
+  const { title } = useSettings();
   return (
     <footer className="bg-gray-800 text-white p-4 text-center">
-      SnackCustomize © {new Date().getFullYear()} - Tous droits réservés
+      {title} © {new Date().getFullYear()} - Tous droits réservés
     </footer>
   );
 }

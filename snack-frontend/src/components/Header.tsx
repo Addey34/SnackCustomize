@@ -1,15 +1,18 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { useSettings } from '../hooks/useSettings';
 import Button from './Buttons/Button';
 
 export default function Header() {
   const { token, logout } = useAuth();
+  const { title, logo } = useSettings();
+
   return (
     <header className="bg-white shadow-md p-4 flex justify-between items-center">
       <Link to="/">
         <div className="flex items-center gap-2">
-          <img src="/logo.png" alt="Logo" className="h-16 w-16" />
-          <span className="font-bold text-2xl">SnackCustomize</span>
+          <img src={logo} alt="Logo" className="h-16 w-16" />
+          <span className="font-bold text-2xl">{title}</span>
         </div>
       </Link>
       {token ? (
