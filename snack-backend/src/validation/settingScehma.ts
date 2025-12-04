@@ -1,8 +1,11 @@
 import { z } from 'zod';
 
-export const settingsSchema = z.object({
-  themeColor: z.string().optional(),
-  logoUrl: z.string().url('L’URL du logo doit être valide').optional(),
+// Schéma de validation pour les settings
+export const settingSchema = z.object({
+  title: z.string().optional(),
+  logo: z.string().optional(),
+  colorTheme: z.string().optional(),
 });
 
-export type SettingsData = z.infer<typeof settingsSchema>;
+// Type TypeScript des données validées
+export type SettingData = z.infer<typeof settingSchema>;

@@ -1,19 +1,21 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
-// Définition de l'interface ISettings
-export interface ISettings extends Document {
-  themeColor?: string;
-  logoUrl?: string;
+// Définition de l'interface ISetting
+export interface ISetting extends Document {
+  title?: string;
+  logo?: string;
+  colorTheme?: string;
 }
 
 // Définition du schéma Settings
-const SettingsSchema: Schema = new Schema(
+const SettingSchema: Schema = new Schema(
   {
-    themeColor: String,
-    logoUrl: String,
+    title: { type: String, required: true, default: 'EshopCustomize' },
+    logo: { type: String, required: true, default: 'defaultLogo.png' },
+    colorTheme: { type: String, required: true, default: 'light' },
   },
   { timestamps: true },
 );
 
 // Exportation du modèle Settings
-export default mongoose.model<ISettings>('Settings', SettingsSchema);
+export default mongoose.model<ISetting>('Setting', SettingSchema);

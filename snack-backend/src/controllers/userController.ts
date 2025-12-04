@@ -1,12 +1,8 @@
 import type { Request, Response } from 'express';
-import {
-  getAllUsers,
-  getCurrentUser,
-  updateUser,
-} from '../services/userService.js';
+import { getAllUsers, getUser, updateUser } from '../services/userService.js';
 import { updateUserSchema } from '../validation/userSchema.js';
 
-// Récupérer tous les utilisateurs (pour les admins)
+// Récupérer tous les utilisateurs (admins)
 export const getAllUsersController = async (_req: Request, res: Response) => {
   try {
     const users = await getAllUsers();
@@ -17,17 +13,17 @@ export const getAllUsersController = async (_req: Request, res: Response) => {
 };
 
 // Récupérer l'utilisateur connecté
-export const getCurrentUserController = async (req: Request, res: Response) => {
+export const getUserController = async (req: Request, res: Response) => {
   try {
     const userId = (req as any).user.id;
-    const user = await getCurrentUser(userId);
+    const user = await getUser(userId);
     res.json(user);
   } catch (err) {
     res.status(500).json({ msg: 'Erreur serveur', error: err });
   }
 };
 
-// Mettre à jour un utilisateur (lui-même)
+// Mettre à jour un utilisateur
 export const updateUserController = async (req: Request, res: Response) => {
   try {
     const parsed = updateUserSchema.safeParse(req.body);
