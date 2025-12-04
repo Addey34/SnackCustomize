@@ -1,6 +1,6 @@
 interface FormWrapperProps {
   title: string;
-  onSubmit: (e: React.FormEvent) => void;
+  onSubmit?: (e: React.FormEvent) => void;
   children: React.ReactNode;
 }
 
