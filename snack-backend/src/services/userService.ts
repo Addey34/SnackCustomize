@@ -8,7 +8,7 @@ export const getAllUsers = async () => {
 };
 
 // Récupérer l'utilisateur connecté
-export const getCurrentUser = async (userId: string) => {
+export const getUser = async (userId: string) => {
   const user = await User.findById(userId).select('-password');
   if (!user) throw new Error('User not found');
   return user;

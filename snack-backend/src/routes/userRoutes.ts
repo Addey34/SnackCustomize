@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import {
   getAllUsersController,
-  getCurrentUserController,
+  getUserController,
   updateUserController,
 } from '../controllers/userController.js';
 import { isAdmin, verifyToken } from '../middleware/authMiddleware.js';
@@ -12,7 +12,7 @@ const router: Router = Router();
 router.get('/', verifyToken, isAdmin, getAllUsersController);
 
 // GET current user profile
-router.get('/me', verifyToken, getCurrentUserController);
+router.get('/:id', verifyToken, getUserController);
 
 // PUT update current user profile
 router.put('/:id', verifyToken, updateUserController);
