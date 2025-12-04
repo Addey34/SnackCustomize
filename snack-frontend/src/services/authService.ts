@@ -15,7 +15,3 @@ export const registerApi = async (
   return res.data;
 };
 
-export const getCurrentUserApi = async () => {
-  const res = await api.get('/users/me');
-  return res.data;
-};
