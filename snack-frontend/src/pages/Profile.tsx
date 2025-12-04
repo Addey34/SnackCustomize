@@ -1,9 +1,9 @@
 import { CheckIcon, PencilIcon, XMarkIcon } from '@heroicons/react/16/solid';
 import { useContext, useEffect, useState } from 'react';
-import api from '../api/api';
 import Button from '../components/Buttons/Button';
+import { FormWrapper } from '../components/Forms/FormWrapper';
 import { AuthContext } from '../contexts/AuthContext';
-import { getCurrentUserApi } from '../services/authService';
+import { getUserApi, updateUserApi } from '../services/userService';
 
 interface User {
   _id: string;
@@ -39,7 +39,7 @@ export const Profile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const data = await getCurrentUserApi();
+        const data = await getUserApi('user');
         if (!data) {
           logout();
           return;
@@ -52,18 +52,21 @@ export const Profile = () => {
     fetchUser();
   }, [logout]);
 
+  // Gestion de l'édition des champs
   const handleEdit = (field: Exclude<keyof User, '_id'>) => {
     setEditField(field);
     setTempValue('');
     setConfirmValue('');
   };
 
+  // Annuler l'édition
   const handleCancel = () => {
     setEditField(null);
     setTempValue('');
     setConfirmValue('');
   };
 
+  // Sauvegarder les modifications
   const handleSave = async () => {
     if (!user || !editField) return;
     if (tempValue !== confirmValue) {
@@ -73,15 +76,11 @@ export const Profile = () => {
 
     setLoading(true);
     try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        setMsg('Token manquant ❌');
-        return;
-      }
-      const res = await api.put(`/users/${user._id}`, {
-        [editField]: tempValue,
-      });
-      setUser(res.data);
+      const updatedUser = await updateUserApi(user._id, editField, tempValue);
+      setUser((prevUser) => ({
+        ...prevUser!,
+        [editField]: updatedUser[editField],
+      }));
       setMsg('Profil mis à jour ✅');
     } catch {
       setMsg('Erreur lors de la mise à jour ❌');
@@ -112,9 +111,7 @@ export const Profile = () => {
   };
 
   return (
-    <div className="p-8 rounded-xl shadow-md w-full max-w-xl bg-white">
-      <h1 className="text-2xl font-bold mb-6 text-center">Mon Profil</h1>
-
+    <FormWrapper title="Mon Profil">
       {msg && (
         <p
           className={`text-center mb-4 font-medium ${
@@ -198,6 +195,6 @@ export const Profile = () => {
           Rafraîchir les infos
         </Button>
       </div>
-    </div>
+    </FormWrapper>
   );
 };
