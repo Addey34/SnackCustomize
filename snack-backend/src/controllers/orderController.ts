@@ -35,13 +35,13 @@ export const getAllOrdersController = async (req: Request, res: Response) => {
 };
 
 // Récupérer les commandes d'un utilisateur
-export const getUserOrdersController = async (req: Request, res: Response) => {
-  const userId = req.params.userId;
-  if (!userId) {
+export const getOrdersController = async (req: Request, res: Response) => {
+  const id = req.params.id;
+  if (!id) {
     return res.status(400).json({ msg: 'Missing user ID' });
   }
   try {
-    const orders = await getUserOrders(userId);
+    const orders = await getUserOrders(id);
     res.json(orders);
   } catch (err) {
     res.status(500).json({ msg: 'Error fetching user orders', error: err });

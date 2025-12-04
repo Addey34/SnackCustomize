@@ -26,11 +26,9 @@ export const getAllOrders = async () => {
   }
 };
 
-export const getUserOrders = async (userId: string) => {
+export const getUserOrders = async (id: string) => {
   try {
-    const orders = await Order.find({ client: userId }).populate(
-      'items.article',
-    );
+    const orders = await Order.find({ id }).populate('items.article');
     return orders;
   } catch (err) {
     console.error('Error fetching user orders', err);
